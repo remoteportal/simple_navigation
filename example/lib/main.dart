@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:substring_highlight/substring_highlight.dart';
+import 'package:simple_navigation/simple_navigation.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,8 +12,7 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       home: Scaffold(
           body: Center(
-              child: SubstringHighlight(
-                  text: 'search me for search terms', term: 'search'))),
+              child: Text('search me for search terms'))),
     );
   }
 }

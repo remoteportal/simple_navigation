@@ -1,5 +1,5 @@
 name: example
-description: substring_highlight example
+description: simple_navigation example
 
 version: 1.0.3
 
@@ -14,7 +14,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  substring_highlight:
+  simple_navigation:
     path: ../
 
 flutter:
