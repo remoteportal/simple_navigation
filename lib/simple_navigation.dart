@@ -1,7 +1,29 @@
 library simple_navigation;
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
+import 'package:flutter/material.dart';
+
+class Nav extends StatefulWidget {
+  Nav({this.child});
+
+  final Widget child;
+
+  @override
+  _NavState createState() => _NavState();
+}
+
+class _NavState extends State<Nav> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(child:widget.child);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
 }

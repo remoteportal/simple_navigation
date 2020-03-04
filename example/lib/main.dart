@@ -10,9 +10,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      home: Scaffold(
-          body: Center(
-              child: Text('search me for search terms'))),
+      home: Nav(
+        child: Scaffold(
+            body: Center(
+                child: Text('search me for search'))),
+      ),
     );
   }
 }
