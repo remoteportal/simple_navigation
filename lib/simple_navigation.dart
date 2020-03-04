@@ -7,27 +7,27 @@ class NavItem {
 
   String route;
   Map<String, dynamic> args;
+
+  @override
+  String toString() => route;
 }
 
 _NavState nav;
 
 class Nav extends StatefulWidget {
   static NavItem pop() {
-    if (stack.length == 1) {
-      return stack.first;
-    } else {
-      return stack.removeLast();
-    }
+    return nav.pop();
   }
 
   static push(String route, [Map<String, dynamic> args]) {
-    stack.add(NavItem(route, args));
+    nav.push(route, args);
   }
 
   static Map<String, Widget> routes;
-  static List<NavItem> stack = [NavItem('/')];
 
-  static NavItem get top => stack.last;
+  static List<NavItem> get stack => nav.stack;
+
+//  static NavItem get top => nav.stack.last;
 
 //  Nav({this.child});  // , this.routeMap
   Nav(); // , this.routeMap
@@ -43,10 +43,27 @@ class Nav extends StatefulWidget {
 }
 
 class _NavState extends State<Nav> {
+  List<NavItem> _stack = [NavItem('/')];
+
   @override
   Widget build(BuildContext context) {
-//    return Container(child: widget.child);
-    return Container(child: Nav.routes['/']);
+    print("Nav build");
+
+    Widget w = Nav.routes[_stack.last];
+    if (w == null) {
+      print("null");
+      w = Column(
+        children: <Widget>[
+          Text('404'),
+          Text('key=${_stack.last}'),
+          Text('routes=${Nav.routes}'),
+        ],
+      );
+    } else {
+      print("!null");
+    }
+
+    return Container(child: w);
   }
 
   @override
@@ -58,4 +75,26 @@ class _NavState extends State<Nav> {
   void initState() {
     super.initState();
   }
+
+  NavItem pop() {
+    NavItem ni;
+    if (_stack.length == 1) {
+      ni = _stack.first;
+    } else {
+      setState(() {
+        ni = _stack.removeLast();
+      });
+    }
+
+    return ni;
+  }
+
+  push(String route, [Map<String, dynamic> args]) {
+    print("push $route");
+    setState(() {
+      _stack.add(NavItem(route, args));
+    });
+  }
+
+  List<NavItem> get stack => _stack;
 }
