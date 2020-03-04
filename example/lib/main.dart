@@ -8,7 +8,7 @@ class Scrn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("main build");
+    print("scrn build");
 
     return Column(
       children: <Widget>[

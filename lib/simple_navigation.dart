@@ -47,11 +47,10 @@ class _NavState extends State<Nav> {
 
   @override
   Widget build(BuildContext context) {
-    print("Nav build");
+    print("Nav build $counter");
 
     Widget w = Nav.routes[_stack.last.route];
     if (w == null) {
-      print("null");
       w = Column(
         children: <Widget>[
           Text('404'),
@@ -59,8 +58,6 @@ class _NavState extends State<Nav> {
           Text('routes=${Nav.routes}'),
         ],
       );
-    } else {
-      print("!null");
     }
 
     return Container(child: w);
