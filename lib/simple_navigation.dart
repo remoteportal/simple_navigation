@@ -49,7 +49,7 @@ class _NavState extends State<Nav> {
   Widget build(BuildContext context) {
     print("Nav build");
 
-    Widget w = Nav.routes[_stack.last];
+    Widget w = Nav.routes[_stack.last.route];
     if (w == null) {
       print("null");
       w = Column(

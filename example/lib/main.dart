@@ -15,6 +15,11 @@ class Scrn extends StatelessWidget {
         Text('${Nav.stack}'),
         Text(name),
         RaisedButton(
+            child: Text('pop'),
+            onPressed: () {
+              Nav.pop();
+            }),
+        RaisedButton(
             child: Text('a'),
             onPressed: () {
               print("pressed a");
