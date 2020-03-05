@@ -47,7 +47,7 @@ class _NavState extends State<Nav> {
 
   @override
   Widget build(BuildContext context) {
-    print("Nav build $counter");
+    print("Nav build");
 
     Widget w = Nav.routes[_stack.last.route];
     if (w == null) {
