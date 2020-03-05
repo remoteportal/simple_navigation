@@ -3,7 +3,7 @@ import 'package:simple_navigation/simple_navigation.dart';
 
 class Scrn extends StatefulWidget {
   Scrn(this.name) {
-//    print("$name called");
+    print("$name called");
   }
 
   final String name;
@@ -114,11 +114,11 @@ class _ScrnState extends State<Scrn> {
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  print("calling...");
+  print("routes");
   Nav.routes = {
-    '/': Scrn('home'),
-    '/a': Scrn('a'),
-    '/b': Scrn('b'),
+    '/': () => Scrn('home'),
+    '/a': () => Scrn('a'),
+    '/b': () => Scrn('b'),
   };
   runApp(new MyApp());
 }

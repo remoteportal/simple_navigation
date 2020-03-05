@@ -27,7 +27,7 @@ class Nav extends StatefulWidget {
     nav.push(route, args);
   }
 
-  static Map<String, Widget> routes;
+  static Map<String, Function> routes;
 
   static List<NavItem> get stack => nav.stack;
 
@@ -51,10 +51,14 @@ class _NavState extends State<Nav> {
 
   @override
   Widget build(BuildContext context) {
-    print("Nav build");
+    Widget w;
 
-    Widget w = Nav.routes[_stack.last.route];
-    if (w == null) {
+//    Widget w = Nav.routes[_stack.last.route];
+    Function fn = Nav.routes[_stack.last.route];
+
+    print("Nav build: ${_stack.last.route}");
+
+    if (fn == null) {
       w = Column(
         children: <Widget>[
           Text('404'),
@@ -62,6 +66,9 @@ class _NavState extends State<Nav> {
           Text('routes=${Nav.routes}'),
         ],
       );
+    } else {
+//      print("found");
+      w = fn();
     }
 
     return Container(child: w);
