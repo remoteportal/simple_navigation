@@ -19,6 +19,10 @@ class Nav extends StatefulWidget {
     return nav.pop();
   }
 
+  static repl(String route, [Map<String, dynamic> args]) {
+    nav.repl(route, args);
+  }
+
   static push(String route, [Map<String, dynamic> args]) {
     nav.push(route, args);
   }
@@ -73,6 +77,15 @@ class _NavState extends State<Nav> {
     super.initState();
   }
 
+  void repl(String route, [Map<String, dynamic> args]) {
+    NavItem ni = _stack.removeLast();
+
+    print("repl $route");
+    setState(() {
+      _stack.add(NavItem(route, args));
+    });
+  }
+
   NavItem pop() {
     NavItem ni;
     if (_stack.length == 1) {
@@ -86,7 +99,7 @@ class _NavState extends State<Nav> {
     return ni;
   }
 
-  push(String route, [Map<String, dynamic> args]) {
+  void push(String route, [Map<String, dynamic> args]) {
     print("push $route");
     setState(() {
       _stack.add(NavItem(route, args));
