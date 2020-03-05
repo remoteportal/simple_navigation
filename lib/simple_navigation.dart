@@ -51,27 +51,32 @@ class _NavState extends State<Nav> {
 
   @override
   Widget build(BuildContext context) {
-    Widget w;
-
-//    Widget w = Nav.routes[_stack.last.route];
-    Function fn = Nav.routes[_stack.last.route];
-
-    print("Nav build: ${_stack.last.route}");
-
-    if (fn == null) {
-      w = Column(
-        children: <Widget>[
-          Text('404'),
-          Text('key=${_stack.last}'),
-          Text('routes=${Nav.routes}'),
-        ],
-      );
+    if (Nav.routes == null) {
+      return Text('Nav.routes is null');
     } else {
-//      print("found");
-      w = fn(context);
-    }
+      Widget w;
 
-    return Container(child: w);
+      Function fn = Nav.routes[_stack.last.route];
+
+      print("Nav build: ${_stack.last.route}");
+
+      if (fn == null) {
+        w = Scaffold(
+          body: Column(
+            children: <Widget>[
+              Text('404'),
+              Text('key=${_stack.last}'),
+              Text('routes=${Nav.routes}'),
+            ],
+          ),
+        );
+      } else {
+//      print("found");
+        w = fn(context);
+      }
+
+      return Container(child: w);
+    }
   }
 
   @override
@@ -86,6 +91,10 @@ class _NavState extends State<Nav> {
 
   void repl(String route, [Map<String, dynamic> args]) {
     _stack.removeLast(); // NavItem ni
+
+    if (!route.startsWith('/')) {
+      route = "/$route";
+    }
 
     print("repl $route");
     setState(() {
@@ -107,6 +116,10 @@ class _NavState extends State<Nav> {
   }
 
   void push(String route, [Map<String, dynamic> args]) {
+    if (!route.startsWith('/')) {
+      route = "/$route";
+    }
+
     print("push $route");
     setState(() {
       _stack.add(NavItem(route, args));
