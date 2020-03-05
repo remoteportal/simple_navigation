@@ -75,7 +75,14 @@ class _NavState extends State<Nav> {
         w = fn(context);
       }
 
-      return Container(child: w);
+//      return Container(child: w);
+      return WillPopScope(
+          onWillPop: () async {
+            print("hardware pop => false");
+            pop();
+            return false;
+          },
+          child: w);
     }
   }
 
