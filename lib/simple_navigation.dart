@@ -29,6 +29,9 @@ class Nav extends StatefulWidget {
 
   static Map<String, WidgetBuilder> routes;
 
+  /// map to replace routes with other routes (/home => /homeNew)
+  static Map<String, String> routesOverride;
+
   static List<NavItem> get stack => nav.stack;
 
 //  static NavItem get top => nav.stack.last;
@@ -99,9 +102,7 @@ class _NavState extends State<Nav> {
   void repl(String route, [Map<String, dynamic> args]) {
     _stack.removeLast(); // NavItem ni
 
-    if (!route.startsWith('/')) {
-      route = "/$route";
-    }
+    route = standardize(route);
 
     print("repl $route");
     setState(() {
@@ -123,9 +124,7 @@ class _NavState extends State<Nav> {
   }
 
   void push(String route, [Map<String, dynamic> args]) {
-    if (!route.startsWith('/')) {
-      route = "/$route";
-    }
+    route = standardize(route);
 
     print("push $route");
     setState(() {
@@ -134,4 +133,23 @@ class _NavState extends State<Nav> {
   }
 
   List<NavItem> get stack => _stack;
+
+  String standardize(String route) {
+    assert(route != null, 'route cannot be null');
+
+    if (!route.startsWith('/')) {
+      route = "/$route";
+    }
+
+    if (Nav.routesOverride != null) {
+      //M
+      // print("map: $routesOverride");
+      String _ = Nav.routesOverride[route];
+      if (_ != null) {
+        route = _;
+      }
+    }
+
+    return route;
+  }
 }
