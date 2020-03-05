@@ -1,5 +1,5 @@
 name: simple_navigation
-description: Simple named route navigation that unofficially addresses Flutter issue 11655 build called for non-current screens
+description: Simple named route navigation that unofficially addresses Flutter issue 11655 ("build called for non-current screens")
 version: 0.0.1
 author:
 homepage:

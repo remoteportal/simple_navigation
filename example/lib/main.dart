@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:simple_navigation/simple_navigation.dart';
 
 class Scrn extends StatefulWidget {
-  Scrn(this.name);
+  Scrn(this.name) {
+//    print("$name called");
+  }
 
   final String name;
 
@@ -13,7 +15,7 @@ class Scrn extends StatefulWidget {
 class _ScrnState extends State<Scrn> {
   @override
   Widget build(BuildContext context) {
-    print("scrn build");
+//    print("scrn build");
 
     return Column(
       children: <Widget>[
@@ -112,6 +114,7 @@ class _ScrnState extends State<Scrn> {
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  print("calling...");
   Nav.routes = {
     '/': Scrn('home'),
     '/a': Scrn('a'),
