@@ -116,9 +116,9 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   print("routes");
   Nav.routes = {
-    '/': () => Scrn('home'),
-    '/a': () => Scrn('a'),
-    '/b': () => Scrn('b'),
+    '/': (context) => Scrn('home'),
+    '/a': (context) => Scrn('a'),
+    '/b': (context) => Scrn('b'),
   };
   runApp(new MyApp());
 }

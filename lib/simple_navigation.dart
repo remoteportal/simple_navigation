@@ -27,7 +27,7 @@ class Nav extends StatefulWidget {
     nav.push(route, args);
   }
 
-  static Map<String, Function> routes;
+  static Map<String, WidgetBuilder> routes;
 
   static List<NavItem> get stack => nav.stack;
 
@@ -68,7 +68,7 @@ class _NavState extends State<Nav> {
       );
     } else {
 //      print("found");
-      w = fn();
+      w = fn(context);
     }
 
     return Container(child: w);
@@ -85,7 +85,7 @@ class _NavState extends State<Nav> {
   }
 
   void repl(String route, [Map<String, dynamic> args]) {
-    NavItem ni = _stack.removeLast();
+    _stack.removeLast(); // NavItem ni
 
     print("repl $route");
     setState(() {
