@@ -146,6 +146,7 @@ class _NavState extends State<Nav> {
       // print("map: $routesOverride");
       String _ = Nav.routesOverride[route];
       if (_ != null) {
+        print("Nav override: $route => $_");
         route = _;
       }
     }
