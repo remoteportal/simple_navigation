@@ -13,6 +13,7 @@ Simple named route navigation that unofficially addresses Flutter issue 11655 ("
 ## Limitations
 
 - since static, can't have multiple instances
+- currently doesn't work with showDialog() return values
 
 
 ## Features
@@ -28,6 +29,7 @@ Simple named route navigation that unofficially addresses Flutter issue 11655 ("
 - test: hot reload doesn't erase stack
 - solve: object vs. named route problem
 - pass in trace flag to constructor
+- return values? (friends showDialog... pop(return))
 
 
 ## Pull Request

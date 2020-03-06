@@ -62,13 +62,10 @@ class Nav extends StatefulWidget {
 //  static NavItem get top => nav.stack.last;
 
 //  Nav({this.child});  // , this.routeMap
-  Nav({this.backButtonCaptionCallback}); // , this.routeMap
+  Nav({this.backButtonCaptionCallback, this.log = false}); // , this.routeMap
 
   final Function backButtonCaptionCallback;
-
-//  final Widget child;
-
-//  final Map<String,Widget> routeMap;
+  final bool log;
 
   @override
   _NavState createState() {
@@ -86,13 +83,12 @@ class _NavState extends State<Nav> {
 
     if (_stack.length == 1) {
       s = '/'; //TODO//CONFIG
-    }
-    else {
-      s = _stack[_stack.length-2].route;   //TODO: not human
+    } else {
+      s = _stack[_stack.length - 2].route; //TODO: not human
     }
 
     if (widget.backButtonCaptionCallback != null) {
-        s = widget.backButtonCaptionCallback(s);
+      s = widget.backButtonCaptionCallback(s);
     } else {
       s = s.replaceAll('/', '');
     }
@@ -109,7 +105,7 @@ class _NavState extends State<Nav> {
 
       Function fn = Nav.routes[_stack.last.route];
 
-      print("Nav: build: ${_stack.last.route}");
+      if (widget.log) print("Nav: build: ${_stack.last.route}");
 
       if (fn == null) {
         w = Scaffold(
@@ -122,15 +118,13 @@ class _NavState extends State<Nav> {
           ),
         );
       } else {
-//      print("found");
-//        w = fn(context, _stack.last.args);
         w = fn(context);
       }
 
 //      return Container(child: w);
       return WillPopScope(
           onWillPop: () async {
-//            print("Nav: hardware pop => false");
+//            if (widget.log) print("Nav: hardware pop => false");
             pop();
             return false;
           },
@@ -224,7 +218,7 @@ class _NavState extends State<Nav> {
       }
     }
 
-    print("Nav: $why: $xtra$ni");
+    if (widget.log) print("Nav: $why: $xtra$ni");
 
     return ni.route;
   }
