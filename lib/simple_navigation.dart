@@ -27,7 +27,7 @@ class NavItem {
 _NavState nav;
 
 class Nav extends StatefulWidget {
-  static Map<String, dynamic> get args => nav.args;
+  static Map<String, dynamic> get args => nav.args ?? {};   //TODO: make option
 
   bool get hasArgs => nav.hasArgs;
 
