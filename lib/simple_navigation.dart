@@ -29,9 +29,9 @@ _NavState nav;
 class Nav extends StatefulWidget {
   static Map<String, dynamic> get args => nav.args ?? {};   //TODO: make option
 
-  bool get canPop => nav.canPop;
+  static bool get canPop => nav.canPop;
 
-  bool get hasArgs => nav.hasArgs;
+  static bool get hasArgs => nav.hasArgs;
 
   static List<NavItem> get stack => nav.stack;
 
