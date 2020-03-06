@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:simple_navigation/simple_navigation.dart';
 
+int counter = 0;
+
 class Scrn extends StatefulWidget {
   Scrn(this.name) {
     print("$name called");
@@ -27,10 +29,15 @@ class _ScrnState extends State<Scrn> {
               Nav.pop();
             }),
         RaisedButton(
+            child: Text('popAll'),
+            onPressed: () {
+              Nav.popAll();
+            }),
+        RaisedButton(
             child: Text('push a'),
             onPressed: () {
 //              print("pressed a");
-              Nav.push('/a');
+              Nav.push('/a', {'counter': ++counter});
             }),
         RaisedButton(
             child: Text('push b'),

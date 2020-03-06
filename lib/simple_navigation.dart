@@ -9,14 +9,31 @@ class NavItem {
   Map<String, dynamic> args;
 
   @override
-  String toString() => route;
+  String toString() {
+    StringBuffer sb = new StringBuffer();
+
+    if (args == null) {
+      return route;
+    } else {
+      args.forEach((k, v) {
+        sb.write('$k=$v ');
+      });
+
+      return '$route: ${sb.toString()}';
+    }
+  }
 }
 
 _NavState nav;
 
 class Nav extends StatefulWidget {
+  //TODO: https://stackoverflow.com/questions/57198087/dart-generics-abstract-static-methods
   static NavItem pop() {
     return nav.pop();
+  }
+
+  static popAll() {
+    nav.popAll();
   }
 
   static repl(String route, [Map<String, dynamic> args]) {
@@ -89,6 +106,8 @@ class _NavState extends State<Nav> {
     }
   }
 
+  bool get canPop => _stack.length > 1;
+
   @override
   void dispose() {
     super.dispose();
@@ -102,11 +121,12 @@ class _NavState extends State<Nav> {
   void repl(String route, [Map<String, dynamic> args]) {
     _stack.removeLast(); // NavItem ni
 
-    route = standardize(route);
+    var ni = NavItem(route, args);
 
-    print("repl $route");
+    route = _standardize(ni, 'repl');
+
     setState(() {
-      _stack.add(NavItem(route, args));
+      _stack.add(ni);
     });
   }
 
@@ -116,51 +136,63 @@ class _NavState extends State<Nav> {
     if (_stack.length == 1) {
       ni = _stack.last;
     } else {
-        ni = _stack.removeLast();
+      ni = _stack.removeLast();
     }
 
     //CORNER-CASE: in case route being popped has since been overridden, even if at root (/).
     NavItem cur = _stack.last;
-    cur.route = standardize(cur.route);
+    cur.route = _standardize(cur, 'pop');
     setState(() {
-       stack.removeLast();
-       stack.add(cur);
+      stack.removeLast();
+      stack.add(cur);
     });
 
     return ni;
   }
 
-  void push(String route, [Map<String, dynamic> args]) {
-    route = standardize(route);
-
-    print("push $route");
+  void popAll() {
+    NavItem cur = _stack.first;
+    cur.route = _standardize(cur, 'popAll');
     setState(() {
-      _stack.add(NavItem(route, args));
+      stack.clear();
+      stack.add(cur);
+    });
+  }
+
+  void push(String route, [Map<String, dynamic> args]) {
+    var ni = NavItem(route, args);
+
+    route = _standardize(ni, 'push');
+
+    setState(() {
+      _stack.add(ni);
     });
   }
 
   List<NavItem> get stack => _stack;
 
+  String _standardize(NavItem ni, String why) {
+    assert(ni != null, 'route cannot be null');
+    assert(ni.route != null);
+    assert(why != null);
 
-  String standardize(String route) {
-    assert(route != null, 'route cannot be null');
+    String xtra = '';
 
-    if (!route.startsWith('/')) {
-      route = "/$route";
+    if (!ni.route.startsWith('/')) {
+      ni.route = "/${ni.route}";
     }
 
     if (Nav.routesOverride != null) {
-      //M
       // print("map: $routesOverride");
-      String _ = Nav.routesOverride[route];
+      String _ = Nav.routesOverride[ni.route];
       if (_ != null) {
-        print("Nav override: $route => $_");
-        route = _;
-      } else {
-        print("no override");
+        xtra = '${ni.route} => ';
+        ni.route = _;
       }
     }
 
-    return route;
+    print("$why: $xtra$ni");
+
+    return ni.route;
   }
 }
