@@ -112,13 +112,20 @@ class _NavState extends State<Nav> {
 
   NavItem pop() {
     NavItem ni;
+
     if (_stack.length == 1) {
-      ni = _stack.first;
+      ni = _stack.last;
     } else {
-      setState(() {
         ni = _stack.removeLast();
-      });
     }
+
+    //CORNER-CASE: in case route being popped has since been overridden, even if at root (/).
+    NavItem cur = _stack.last;
+    cur.route = standardize(cur.route);
+    setState(() {
+       stack.removeLast();
+       stack.add(cur);
+    });
 
     return ni;
   }
@@ -134,6 +141,7 @@ class _NavState extends State<Nav> {
 
   List<NavItem> get stack => _stack;
 
+
   String standardize(String route) {
     assert(route != null, 'route cannot be null');
 
@@ -148,6 +156,8 @@ class _NavState extends State<Nav> {
       if (_ != null) {
         print("Nav override: $route => $_");
         route = _;
+      } else {
+        print("no override");
       }
     }
 

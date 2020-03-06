@@ -1,3 +1,6 @@
-## [0.0.1] - TODO: Add release date.
+# Changelog
 
-* TODO: Describe initial release.
+
+## Version 1.0.19 (2020-03-06)
+
+- publish to pub.dev
