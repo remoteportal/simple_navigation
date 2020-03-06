@@ -30,8 +30,14 @@ class _ScrnState extends State<Scrn> {
 
     return Column(
       children: <Widget>[
-        Text('${Nav.stack}'),
-        Text('${widget.name}$xtra'),
+        RaisedButton(
+            child: Text(Nav.backButtonCaption),
+            onPressed: () {
+              Nav.pop();
+            }),
+        Text('${Nav.stack}', style: TextStyle(fontSize: 20)),
+        Text('${widget.name}', style: TextStyle(fontSize: 30)),
+        Text('$xtra', style: TextStyle(fontSize: 15)),
         RaisedButton(
             child: Text('pop'),
             onPressed: () {
@@ -147,7 +153,10 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(),
         body: Nav(
 //        child: Scaffold(body: Center(child: Text('search me for search'))),
-            ),
+            backButtonCaptionCallback: (String route) {
+          String s = route.toUpperCase().replaceAll('/', '');
+          return s.length == 0 ? 'home' : s;
+        }),
       ),
     );
   }

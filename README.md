@@ -15,6 +15,10 @@ Simple named route navigation that unofficially addresses Flutter issue 11655 ("
 - since static, can't have multiple instances
 
 
+## Features
+
+- backButtonCaption with callback function 
+
 
 ## TODO
 

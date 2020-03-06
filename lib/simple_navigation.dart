@@ -27,7 +27,9 @@ class NavItem {
 _NavState nav;
 
 class Nav extends StatefulWidget {
-  static Map<String, dynamic> get args => nav.args ?? {};   //TODO: make option
+  static Map<String, dynamic> get args => nav.args ?? {}; //TODO: make option
+
+  static String get backButtonCaption => nav.backButtonCaption();
 
   static bool get canPop => nav.canPop;
 
@@ -60,7 +62,9 @@ class Nav extends StatefulWidget {
 //  static NavItem get top => nav.stack.last;
 
 //  Nav({this.child});  // , this.routeMap
-  Nav(); // , this.routeMap
+  Nav({this.backButtonCaptionCallback}); // , this.routeMap
+
+  final Function backButtonCaptionCallback;
 
 //  final Widget child;
 
@@ -76,6 +80,25 @@ class _NavState extends State<Nav> {
   List<NavItem> _stack = [NavItem('/')];
 
   Map<String, dynamic> get args => _stack.last.args;
+
+  String backButtonCaption() {
+    String s;
+
+    if (_stack.length == 1) {
+      s = '/'; //TODO//CONFIG
+    }
+    else {
+      s = _stack[_stack.length-2].route;   //TODO: not human
+    }
+
+    if (widget.backButtonCaptionCallback != null) {
+        s = widget.backButtonCaptionCallback(s);
+    } else {
+      s = s.replaceAll('/', '');
+    }
+
+    return s;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -114,8 +137,6 @@ class _NavState extends State<Nav> {
           child: w);
     }
   }
-
-
 
   bool get canPop => _stack.length > 1;
 
