@@ -78,7 +78,7 @@ class _NavState extends State<Nav> {
 
       Function fn = Nav.routes[_stack.last.route];
 
-      print("Nav build: ${_stack.last.route}");
+      print("Nav: build: ${_stack.last.route}");
 
       if (fn == null) {
         w = Scaffold(
@@ -92,13 +92,13 @@ class _NavState extends State<Nav> {
         );
       } else {
 //      print("found");
-        w = fn(context);
+        w = fn(context, _stack.last.args);
       }
 
 //      return Container(child: w);
       return WillPopScope(
           onWillPop: () async {
-            print("hardware pop => false");
+//            print("Nav: hardware pop => false");
             pop();
             return false;
           },
@@ -183,7 +183,6 @@ class _NavState extends State<Nav> {
     }
 
     if (Nav.routesOverride != null) {
-      // print("map: $routesOverride");
       String _ = Nav.routesOverride[ni.route];
       if (_ != null) {
         xtra = '${ni.route} => ';
@@ -191,7 +190,7 @@ class _NavState extends State<Nav> {
       }
     }
 
-    print("$why: $xtra$ni");
+    print("Nav: $why: $xtra$ni");
 
     return ni.route;
   }
