@@ -27,6 +27,12 @@ class NavItem {
 _NavState nav;
 
 class Nav extends StatefulWidget {
+  static Map<String, dynamic> get args => nav.args;
+
+  bool get hasArgs => nav.hasArgs;
+
+  static List<NavItem> get stack => nav.stack;
+
   //TODO: https://stackoverflow.com/questions/57198087/dart-generics-abstract-static-methods
   static NavItem pop() {
     return nav.pop();
@@ -49,8 +55,6 @@ class Nav extends StatefulWidget {
   /// map to replace routes with other routes (/home => /homeNew)
   static Map<String, String> routesOverride;
 
-  static List<NavItem> get stack => nav.stack;
-
 //  static NavItem get top => nav.stack.last;
 
 //  Nav({this.child});  // , this.routeMap
@@ -68,6 +72,8 @@ class Nav extends StatefulWidget {
 
 class _NavState extends State<Nav> {
   List<NavItem> _stack = [NavItem('/')];
+
+  Map<String, dynamic> get args => _stack.last.args;
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +98,8 @@ class _NavState extends State<Nav> {
         );
       } else {
 //      print("found");
-        w = fn(context, _stack.last.args);
+//        w = fn(context, _stack.last.args);
+        w = fn(context);
       }
 
 //      return Container(child: w);
@@ -106,12 +113,16 @@ class _NavState extends State<Nav> {
     }
   }
 
+
+
   bool get canPop => _stack.length > 1;
 
   @override
   void dispose() {
     super.dispose();
   }
+
+  bool get hasArgs => _stack.last.args != null;
 
   @override
   void initState() {

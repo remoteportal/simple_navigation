@@ -17,12 +17,21 @@ class Scrn extends StatefulWidget {
 class _ScrnState extends State<Scrn> {
   @override
   Widget build(BuildContext context) {
-//    print("scrn build");
+    String xtra = '';
+//    if (ModalRoute.of(context).settings.arguments != null) {
+//      xtra = ': ARGS=${ModalRoute.of(context).settings.arguments}';
+//    }
+
+    if (Nav.args != null) {
+      xtra = ': ARGS=${Nav.args}';
+    }
+
+    print("scrn build: ${widget.name}$xtra");
 
     return Column(
       children: <Widget>[
         Text('${Nav.stack}'),
-        Text(widget.name),
+        Text('${widget.name}$xtra'),
         RaisedButton(
             child: Text('pop'),
             onPressed: () {
@@ -135,6 +144,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       home: Scaffold(
+        appBar: AppBar(),
         body: Nav(
 //        child: Scaffold(body: Center(child: Text('search me for search'))),
             ),
