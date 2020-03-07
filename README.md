@@ -1,6 +1,8 @@
 # simple_navigation
 
-Simple named route navigation that unofficially addresses Flutter issue 11655 ("build needlessly called for non-current screens lower on stack")
+Simple named route navigation that unofficially addresses Flutter issue 11655 ("build needlessly called for non-current screens lower on stack").
+
+THIS PACKAGE ISN'T FOR EVERYONE.   I prefer the navigation approach implemented herein but it's non-standard.
 
 
 ## Simplifications
@@ -34,4 +36,4 @@ Simple named route navigation that unofficially addresses Flutter issue 11655 ("
 
 ## Pull Request
 
-- encouraged!
+Pull requests are welcome!
