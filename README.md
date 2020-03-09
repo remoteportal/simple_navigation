@@ -2,7 +2,12 @@
 
 Simple named route navigation that unofficially addresses Flutter issue 11655 ("build needlessly called for non-current screens lower on stack").
 
+I consider issue 11655 to be the single biggest problem with the Flutter widget build mechanism; it really bothers me so I felt compelled to roll my own solution.
+
 THIS PACKAGE ISN'T FOR EVERYONE.   I prefer the navigation approach implemented herein but it's non-standard.
+
+_Warning:  This package is an active proof of concept--under active development--and may change drastically at any time._
+
 
 
 ## Simplifications

@@ -1,3 +1,5 @@
+// Copyright 2020 Peter Alvin. All rights reserved.
+
 library simple_navigation;
 
 import 'package:flutter/material.dart';
@@ -108,13 +110,17 @@ class _NavState extends State<Nav> {
       if (widget.log) print("Nav: build: ${_stack.last.route}");
 
       if (fn == null) {
+        List<Widget> l = []
+          ..add(Text('404')) //DART: method-cascades
+          ..add(Text('stack=$_stack'))
+          ..addAll(Nav.routes.keys //DART: can't sort?
+              .map((k) => Text(k))
+              .toList()); //PATTERN: append-list
         w = Scaffold(
-          body: Column(
-            children: <Widget>[
-              Text('404'),
-              Text('key=${_stack.last}'),
-              Text('routes=${Nav.routes}'),
-            ],
+          body: SingleChildScrollView(
+            child: Column(
+              children: l,
+            ),
           ),
         );
       } else {

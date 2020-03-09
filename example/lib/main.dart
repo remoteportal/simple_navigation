@@ -1,3 +1,5 @@
+// Copyright 2020 Peter Alvin. All rights reserved.
+
 import 'package:flutter/material.dart';
 import 'package:simple_navigation/simple_navigation.dart';
 
@@ -22,7 +24,7 @@ class _ScrnState extends State<Scrn> {
 //      xtra = ': ARGS=${ModalRoute.of(context).settings.arguments}';
 //    }
 
-    if (Nav.args != null) {
+    if (Nav.hasArgs) {
       xtra = ': ARGS=${Nav.args}';
     }
 
@@ -71,7 +73,12 @@ class _ScrnState extends State<Scrn> {
             onPressed: () {
 //              print("pressed b");
               Nav.repl('/b');
-            })
+            }),
+        RaisedButton(
+            child: Text('push deanna'),
+            onPressed: () {
+              Nav.push('/deanna');
+            }),
       ],
     );
   }
@@ -86,53 +93,6 @@ class _ScrnState extends State<Scrn> {
     super.initState();
   }
 }
-
-//class Scrn extends StatelessWidget {
-//  Scrn(this.name);
-//
-//  final String name;
-//
-//  @override
-//  Widget build(BuildContext context) {
-//    print("scrn build");
-//
-//    return Column(
-//      children: <Widget>[
-//        Text('${Nav.stack}'),
-//        Text(name),
-//        RaisedButton(
-//            child: Text('pop'),
-//            onPressed: () {
-//              Nav.pop();
-//            }),
-//        RaisedButton(
-//            child: Text('push a'),
-//            onPressed: () {
-////              print("pressed a");
-//              Nav.push('/a');
-//            }),
-//        RaisedButton(
-//            child: Text('push b'),
-//            onPressed: () {
-////              print("pressed b");
-//              Nav.push('/b');
-//            }),
-//        RaisedButton(
-//            child: Text('repl a'),
-//            onPressed: () {
-////              print("pressed a");
-//              Nav.repl('/a');
-//            }),
-//        RaisedButton(
-//            child: Text('repl b'),
-//            onPressed: () {
-////              print("pressed b");
-//              Nav.repl('/b');
-//            })
-//      ],
-//    );
-//  }
-//}
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
