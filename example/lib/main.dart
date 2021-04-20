@@ -32,7 +32,7 @@ class _ScrnState extends State<Scrn> {
 
     return Column(
       children: <Widget>[
-        RaisedButton(
+        ElevatedButton(
             child: Text(Nav.backButtonCaption),
             onPressed: () {
               Nav.pop();
@@ -40,41 +40,41 @@ class _ScrnState extends State<Scrn> {
         Text('${Nav.stack}', style: TextStyle(fontSize: 20)),
         Text('${widget.name}', style: TextStyle(fontSize: 30)),
         Text('$xtra', style: TextStyle(fontSize: 15)),
-        RaisedButton(
+        ElevatedButton(
             child: Text('pop'),
             onPressed: () {
               Nav.pop();
             }),
-        RaisedButton(
+        ElevatedButton(
             child: Text('popAll'),
             onPressed: () {
               Nav.popAll();
             }),
-        RaisedButton(
+        ElevatedButton(
             child: Text('push a'),
             onPressed: () {
 //              print("pressed a");
               Nav.push('/a', {'counter': ++counter});
             }),
-        RaisedButton(
+        ElevatedButton(
             child: Text('push b'),
             onPressed: () {
 //              print("pressed b");
               Nav.push('/b');
             }),
-        RaisedButton(
+        ElevatedButton(
             child: Text('repl a'),
             onPressed: () {
 //              print("pressed a");
               Nav.repl('/a');
             }),
-        RaisedButton(
+        ElevatedButton(
             child: Text('repl b'),
             onPressed: () {
 //              print("pressed b");
               Nav.repl('/b');
             }),
-        RaisedButton(
+        ElevatedButton(
             child: Text('push deanna'),
             onPressed: () {
               Nav.push('/deanna');

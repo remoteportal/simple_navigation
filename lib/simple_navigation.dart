@@ -8,7 +8,7 @@ class NavItem {
   NavItem(this.route, [this.args]);
 
   String route;
-  Map<String, dynamic> args;
+  Map<String, dynamic>? args;
 
   @override
   String toString() {
@@ -17,7 +17,7 @@ class NavItem {
     if (args == null) {
       return route;
     } else {
-      args.forEach((k, v) {
+      args!.forEach((k, v) {
         sb.write('$k=$v ');
       });
 
@@ -26,7 +26,7 @@ class NavItem {
   }
 }
 
-_NavState nav;
+late _NavState nav;
 
 class Nav extends StatefulWidget {
   static Map<String, dynamic> get args => nav.args ?? {}; //TODO: make option
@@ -48,25 +48,25 @@ class Nav extends StatefulWidget {
     nav.popAll();
   }
 
-  static repl(String route, [Map<String, dynamic> args]) {
+  static repl(String route, [Map<String, dynamic>? args]) {
     nav.repl(route, args);
   }
 
-  static push(String route, [Map<String, dynamic> args]) {
+  static push(String route, [Map<String, dynamic>? args]) {
     nav.push(route, args);
   }
 
-  static Map<String, WidgetBuilder> routes;
+  static late Map<String, WidgetBuilder> routes;
 
   /// map to replace routes with other routes (/home => /homeNew)
-  static Map<String, String> routesOverride;
+  static Map<String, String>? routesOverride;
 
 //  static NavItem get top => nav.stack.last;
 
 //  Nav({this.child});  // , this.routeMap
   Nav({this.backButtonCaptionCallback, this.log = false}); // , this.routeMap
 
-  final Function backButtonCaptionCallback;
+  final Function? backButtonCaptionCallback;
   final bool log;
 
   @override
@@ -78,7 +78,7 @@ class Nav extends StatefulWidget {
 class _NavState extends State<Nav> {
   List<NavItem> _stack = [NavItem('/')];
 
-  Map<String, dynamic> get args => _stack.last.args;
+  Map<String, dynamic>? get args => _stack.last.args;
 
   String backButtonCaption() {
     String s;
@@ -90,7 +90,7 @@ class _NavState extends State<Nav> {
     }
 
     if (widget.backButtonCaptionCallback != null) {
-      s = widget.backButtonCaptionCallback(s);
+      s = widget.backButtonCaptionCallback!(s);
     } else {
       s = s.replaceAll('/', '');
     }
@@ -100,42 +100,39 @@ class _NavState extends State<Nav> {
 
   @override
   Widget build(BuildContext context) {
-    if (Nav.routes == null) {
-      return Text('Nav.routes is null');
-    } else {
-      Widget w;
+    Widget w;
 
-      Function fn = Nav.routes[_stack.last.route];
+    Function? fn = Nav.routes[_stack.last.route];
 
-      if (widget.log) print("Nav: build: ${_stack.last.route}");
+    if (widget.log) print("Nav: build: ${_stack.last.route}");
 
-      if (fn == null) {
-        List<Widget> l = []
-          ..add(Text('404')) //DART: method-cascades
-          ..add(Text('stack=$_stack'))
-          ..addAll(Nav.routes.keys //DART: can't sort?
-              .map((k) => Text(k))
-              .toList()); //PATTERN: append-list
-        w = Scaffold(
-          body: SingleChildScrollView(
-            child: Column(
-              children: l,
-            ),
+    if (fn == null) {
+      List<Widget> l = []
+        ..add(Text('404')) //DART: method-cascades
+        ..add(Text('stack=$_stack'))
+        ..addAll(Nav.routes
+            .keys //DART: can't sort?  https://stackoverflow.com/questions/12888206/how-can-i-sort-a-list-of-strings-in-dart
+            .map((k) => Text(k))
+            .toList()); //PATTERN: append-list
+      w = Scaffold(
+        body: SingleChildScrollView(
+          child: Column(
+            children: l,
           ),
-        );
-      } else {
-        w = fn(context);
-      }
+        ),
+      );
+    } else {
+      w = fn(context);
+    }
 
 //      return Container(child: w);
-      return WillPopScope(
-          onWillPop: () async {
+    return WillPopScope(
+        onWillPop: () async {
 //            if (widget.log) print("Nav: hardware pop => false");
-            pop();
-            return false;
-          },
-          child: w);
-    }
+          pop();
+          return false;
+        },
+        child: w);
   }
 
   bool get canPop => _stack.length > 1;
@@ -152,7 +149,7 @@ class _NavState extends State<Nav> {
     super.initState();
   }
 
-  void repl(String route, [Map<String, dynamic> args]) {
+  void repl(String route, [Map<String, dynamic>? args]) {
     _stack.removeLast(); // NavItem ni
 
     var ni = NavItem(route, args);
@@ -193,7 +190,7 @@ class _NavState extends State<Nav> {
     });
   }
 
-  void push(String route, [Map<String, dynamic> args]) {
+  void push(String route, [Map<String, dynamic>? args]) {
     var ni = NavItem(route, args);
 
     route = _standardize(ni, 'push');
@@ -206,10 +203,6 @@ class _NavState extends State<Nav> {
   List<NavItem> get stack => _stack;
 
   String _standardize(NavItem ni, String why) {
-    assert(ni != null, 'route cannot be null');
-    assert(ni.route != null);
-    assert(why != null);
-
     String xtra = '';
 
     if (!ni.route.startsWith('/')) {
@@ -217,7 +210,7 @@ class _NavState extends State<Nav> {
     }
 
     if (Nav.routesOverride != null) {
-      String _ = Nav.routesOverride[ni.route];
+      String? _ = Nav.routesOverride![ni.route];
       if (_ != null) {
         xtra = '${ni.route} => ';
         ni.route = _;

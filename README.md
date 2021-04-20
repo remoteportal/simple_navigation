@@ -20,7 +20,8 @@ _Warning:  This package is an active proof of concept--under active development-
 ## Limitations
 
 - since static, can't have multiple instances
-- currently doesn't work with showDialog() return values
+- doesn't work with showDialog() return values
+- doesn't work with Hero widget
 
 
 ## Features
